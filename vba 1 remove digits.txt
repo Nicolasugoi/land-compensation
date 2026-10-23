@@ -1,0 +1,22 @@
+Sub LamTronSoThapPhan()
+    Dim rng As Range
+    Set rng = ActiveDocument.Content
+    
+    ' S? d?ng Wildcards (tìm ki?m nâng cao) d? tìm s? th?p phân dài
+    With rng.Find
+        .ClearFormatting
+        .Replacement.ClearFormatting
+        .Text = "[0-9]{1,}.[0-9]{2,}" ' Tìm các s? có d?u ch?m và t? 2 ch? s? th?p phân tr? lên
+        .MatchWildcards = True
+        
+        Do While .Execute
+            ' L?c và làm tròn giá tr? tìm du?c v? 1 ch? s? th?p phân
+            Dim val As Double
+            val = CDbl(rng.Text)
+            rng.Text = Format(val, "0.0")
+            rng.Collapse wdCollapseEnd
+        Loop
+    End With
+    
+    MsgBox "Ðã hoàn t?t làm tròn các s? th?p phân!", vbInformation
+End Sub

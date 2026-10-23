@@ -1,0 +1,51 @@
+Sub XoaDongTrangHoanToan()
+    Dim tbl As Table
+    Dim r As Long, c As Long
+    Dim hangRong As Boolean
+    Dim soHangDaXoa As Long
+
+    Application.ScreenUpdating = False
+    soHangDaXoa = 0
+
+    ' Duy?t qua t?t c? cï¿½c b?ng trong van b?n
+    For Each tbl In ActiveDocument.Tables
+        If tbl.Rows.Count > 1 Then
+            ' Duy?t cï¿½c hï¿½ng t? du?i lï¿½n trï¿½n (b?t d?u t? hï¿½ng cu?i lï¿½n hï¿½ng 2, b? qua hï¿½ng tiï¿½u d?)
+            For r = tbl.Rows.Count To 2 Step -1
+                hangRong = True
+                
+                ' Ki?m tra t?t c? cï¿½c ï¿½ trong hï¿½ng hi?n t?i
+                For c = 1 To tbl.Rows(r).Cells.Count
+                    If NoiDungO(tbl.Rows(r).Cells(c)) <> "" Then
+                        hangRong = False ' Ch? c?n 1 ï¿½ cï¿½ n?i dung thï¿½ khï¿½ng ph?i dï¿½ng tr?ng
+                        Exit For
+                    End If
+                Next c
+                
+                ' N?u t?t c? cï¿½c ï¿½ d?u tr?ng hoï¿½n toï¿½n thï¿½ xï¿½a hï¿½ng
+                If hangRong Then
+                    tbl.Rows(r).Delete
+                    soHangDaXoa = soHangDaXoa + 1
+                End If
+            Next r
+        End If
+    Next tbl
+
+    Application.ScreenUpdating = True
+    MsgBox "ï¿½ï¿½ xï¿½a thï¿½nh cï¿½ng " & soHangDaXoa & " dï¿½ng tr?ng hoï¿½n toï¿½n!", vbInformation, "Thï¿½ng bï¿½o"
+End Sub
+
+Function NoiDungO(o As Cell) As String
+    Dim s As String
+    s = o.Range.Text
+    
+    ' Xï¿½a cï¿½c kï¿½ t? di?u khi?n m?c d?nh c?a b?ng Word
+    s = Replace(s, Chr(13), "")
+    s = Replace(s, Chr(7), "")
+    s = Replace(s, Chr(160), " ")
+    s = Replace(s, ChrW(8203), "")
+    s = Replace(s, vbTab, "")
+    s = Replace(s, vbLf, "")
+    
+    NoiDungO = Trim(s)
+End Function

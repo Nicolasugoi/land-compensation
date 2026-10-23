@@ -55,7 +55,7 @@ The arrows describe the working process. Consolidation, exception review, and pr
 
 I combined the contributor files into a master workbook, retained numbered source-file separators, and used Excel’s **Group/Outline** feature to navigate between source sections and their detailed records.
 
-The sample preserves this organization in `File tổng`. The source markers make it easier to trace a section back to its input file, while grouping keeps a long worksheet manageable during review.
+The sample preserves this organization in sheet `File tổng`. The source markers make it easier to trace a section back to its input file, while grouping keeps a long worksheet manageable during review.
 
 ### Reference-based reconciliation
 
